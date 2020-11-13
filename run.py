@@ -40,6 +40,8 @@ def bin_scan(rels_path):
 
 def hwp_decompress(key, obj_value, hwp_name):
     try:
+        print('==================================================================')    
+        print('[+] BinData : ' + key)
         z_obj = zlib.decompressobj(-zlib.MAX_WBITS)
         result = z_obj.decompress(obj_value)
   
@@ -48,6 +50,8 @@ def hwp_decompress(key, obj_value, hwp_name):
             os.makedirs(folder_path)
     
         save_file_path = os.path.join(folder_path, hwp_name + '_' + key + '.decompress')  
+        print('[+] SavePath : ' + folder_path)
+        print('[+] SaveFileName : ' + hwp_name + '_' + key + '.decompress')
         f = open(save_file_path, 'wb')
         f.write(result)
         f.close()
@@ -67,10 +71,13 @@ def hwp_decompress(key, obj_value, hwp_name):
 def malscan():
     for name in hwp:
         ole_stream_data(name)
-
+        print('==================================================================')
+        print('[+] HWP_NAME : ' + name)
         for key in bin_list.keys():
             value = bin_list.get(key)
             hwp_decompress(key, value, name)
+        print('==================================================================')  
+        print(' ')
         bin_list.clear()
    
 doc_scan(FOL_PATH)
